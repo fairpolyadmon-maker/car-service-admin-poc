@@ -1,5 +1,10 @@
 # Car Service Center Admin POC - Daily Routine Task & Enforcement App
 
+[![Direct APK Download](https://img.shields.io/badge/Download-CarServiceAdminPOC.apk-brightgreen?style=for-the-badge&logo=android)](https://github.com/fairpolyadmon-maker/car-service-admin-poc/releases/download/v1.0.0/CarServiceAdminPOC.apk)
+[![GitHub Release](https://img.shields.io/badge/Release-v1.0.0-blue?style=for-the-badge&logo=github)](https://github.com/fairpolyadmon-maker/car-service-admin-poc/releases/tag/v1.0.0)
+
+> 📱 **সরাসরি APK ডাউনলোড লিংক**: [CarServiceAdminPOC.apk ডাউনলোড করুন (v1.0.0)](https://github.com/fairpolyadmon-maker/car-service-admin-poc/releases/download/v1.0.0/CarServiceAdminPOC.apk)
+
 An Android application built with **Kotlin** and **Jetpack Compose** tailored specifically for the **Car Service Center Admin POC (Sr. Executive / Assistant Manager - Car Service Center)** to enforce standard operating procedures (SOPs), track inspections, forcefully alert pending tasks, and automate daily reporting to the Head of Administration.
 
 ---
