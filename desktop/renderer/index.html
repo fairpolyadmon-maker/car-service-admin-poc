@@ -66,9 +66,13 @@
           <i class="fa-solid fa-file-lines"></i>
           <span>ম্যানেজমেন্ট রিপোর্টিং</span>
         </button>
+        <button class="nav-item" data-tab="monthly">
+          <i class="fa-solid fa-calendar-days"></i>
+          <span>মাসিক স্টেটমেন্ট ও অডিট</span>
+        </button>
         <button class="nav-item" data-tab="settings">
           <i class="fa-solid fa-sliders"></i>
-          <span>কনফিগ ও অ্যালার্ম টেস্ট</span>
+          <span>কনফিগ ও ক্লাউড সিঙ্ক</span>
         </button>
       </nav>
 
@@ -223,11 +227,97 @@
         </div>
       </section>
 
-      <!-- 5. SETTINGS & TEST TAB -->
+      <!-- 5. MONTHLY STATEMENT & AUDIT TAB -->
+      <section id="tab-monthly" class="tab-pane">
+        <div class="section-header">
+          <div>
+            <h2>📅 কার সার্ভিস সেন্টার - মাসিক স্টেটমেন্ট ও অডিট হাব</h2>
+            <p>প্রতিদিনের ইনস্পেকশন রেকর্ড, সমস্যা ও সমাধানের অগ্রগতি এবং মাসিক কমপ্লায়েন্স স্টেটমেন্ট</p>
+          </div>
+          <div class="monthly-filter-controls">
+            <select id="selMonthlyMonth" class="form-control" style="width: auto; display: inline-block;">
+              <option value="0">জানুয়ারি</option>
+              <option value="1">ফেব্রুয়ারি</option>
+              <option value="2">মার্চ</option>
+              <option value="3">এপ্রিল</option>
+              <option value="4">মে</option>
+              <option value="5">জুন</option>
+              <option value="6">জুলাই</option>
+              <option value="7">আগস্ট</option>
+              <option value="8" selected>সেপ্টেম্বর</option>
+              <option value="9">অক্টোবর</option>
+              <option value="10">নভেম্বর</option>
+              <option value="11">ডিসেম্বর</option>
+            </select>
+            <select id="selMonthlyYear" class="form-control" style="width: auto; display: inline-block;">
+              <option value="2026" selected>২০২৬</option>
+              <option value="2027">২০২৭</option>
+            </select>
+            <button class="btn-primary" id="btnExportMonthlyExcel"><i class="fa-solid fa-file-excel"></i> এক্সেল (CSV) এক্সপোর্ট</button>
+            <button class="btn-outline" id="btnPrintMonthlyStatement"><i class="fa-solid fa-print"></i> প্রিন্ট / PDF</button>
+          </div>
+        </div>
+
+        <!-- Monthly Summary KPIs -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon icon-blue"><i class="fa-solid fa-calendar-check"></i></div>
+            <div class="kpi-data">
+              <span class="kpi-value" id="kpiMonthLoggedDays">0</span>
+              <span class="kpi-label">মোট কার্যদিবস পর্যবেক্ষণ</span>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon icon-green"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="kpi-data">
+              <span class="kpi-value" id="kpiMonthAvgCompliance">0%</span>
+              <span class="kpi-label">গড় রুটিন কমপ্লায়েন্স</span>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon icon-orange"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="kpi-data">
+              <span class="kpi-value" id="kpiMonthTotalIncidents">0</span>
+              <span class="kpi-label">মাসে চিহ্নিত মোট সমস্যা</span>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon icon-red"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="kpi-data">
+              <span class="kpi-value" id="kpiMonthResolvedIncidents">0</span>
+              <span class="kpi-label">সফলভাবে সমাধানকৃত</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Monthly Audit Table -->
+        <div class="card monthly-table-card">
+          <div class="monthly-table-responsive">
+            <table class="audit-table">
+              <thead>
+                <tr>
+                  <th>তারিখ</th>
+                  <th>সকাল (ওপেনিং)</th>
+                  <th>দুপুর (ওয়ার্কশপ)</th>
+                  <th>প্রি-ক্লোজিং (৫:১৫)</th>
+                  <th>কমপ্লায়েন্স রেট</th>
+                  <th>চিহ্নিত সমস্যা / টিকিট</th>
+                  <th>লগ ও রিমার্কস</th>
+                </tr>
+              </thead>
+              <tbody id="monthlyAuditTableBody">
+                <!-- Dynamically Rendered -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. SETTINGS & TEST TAB -->
       <section id="tab-settings" class="tab-pane">
         <div class="section-header">
-          <h2>⚙️ সিস্টেম কনফিগারেশন ও নোটিফিকেশন অ্যালার্ম টেস্ট</h2>
-          <p>অফিসের সময়সূচী, যোগাযোগের নম্বর ও লাইভ অ্যালার্ম পরীক্ষা করুন</p>
+          <h2>⚙️ সিস্টেম কনফিগারেশন ও অনলাইন ক্লাউড ব্যাকআপ</h2>
+          <p>অফিসের সময়সূচী, যোগাযোগের নম্বর, লাইভ অ্যালার্ম এবং ক্লাউড স্টোরেজ নিয়ন্ত্রণ</p>
         </div>
 
         <div class="settings-grid">
@@ -267,10 +357,53 @@
               </button>
             </div>
           </div>
+
+          <!-- Cloud Storage Card -->
+          <div class="card settings-card" style="grid-column: 1 / -1;">
+            <h3>☁️ অনলাইন ক্লাউড স্টোরেজ ও ডাটাবেজ ব্যাকআপ</h3>
+            <p>আপনার সার্ভিস সেন্টারের সমস্ত ডাটা যাতে সুরক্ষিত থাকে এবং যেকোনো কম্পিউটার থেকে মাসিক স্টেটমেন্ট পাওয়া যায়:</p>
+            <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-top: 12px;">
+              <button class="btn-success" id="btnSyncCloudNow"><i class="fa-solid fa-cloud-arrow-up"></i> এখনই ক্লাউডে ব্যাকআপ নিন</button>
+              <button class="btn-outline" id="btnExportJsonBackup"><i class="fa-solid fa-download"></i> ডাটাবেজ ব্যাকআপ (JSON ডাউনলোড)</button>
+              <button class="btn-outline" id="btnImportJsonBackup"><i class="fa-solid fa-upload"></i> ডাটাবেজ রিস্টোর (JSON আপলোড)</button>
+              <input type="file" id="jsonFileInput" accept=".json" style="display:none;">
+            </div>
+            <div class="form-group" style="margin-top: 14px;">
+              <label>কাস্টম ক্লাউড API / Webhook URL (ঐচ্ছিক - Google Sheets / Supabase / Cloud REST API)</label>
+              <input type="text" id="cfgCloudEndpoint" class="form-control" placeholder="https://api.example.com/admin-poc-sync">
+            </div>
+            <div id="cloudSyncStatus" style="font-size: 13px; color: #34d399; margin-top: 8px;">
+              <i class="fa-solid fa-circle-check"></i> লোকাল ফাইল স্টোরেজ সক্রিয়: AppData/admin_poc_desktop_data.json
+            </div>
+          </div>
         </div>
       </section>
 
     </main>
+  </div>
+
+  <!-- MODAL: EDIT TASK NOTE -->
+  <div class="modal-overlay hidden" id="taskNoteModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="noteModalTaskTitle"><i class="fa-solid fa-pen-to-square"></i> টাস্কের নোট / পর্যবেক্ষণ লিখুন</h3>
+        <button class="btn-close" id="btnCloseNoteModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="taskNoteForm">
+          <input type="hidden" id="noteModalTaskId">
+          <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;" id="noteModalTaskDesc"></p>
+          <div class="form-group">
+            <label>মিটার রিডিং, কাজের বিবরণ, ডিজেল লেভেল বা পর্যবেক্ষণ নোট *</label>
+            <textarea id="noteModalInput" class="form-control" rows="4" placeholder="যেমন: জেনারেটর ডিজেল লেভেল ৮০ লিটার, ব্যাটারি ভোল্টেজ স্বাভাবিক, এয়ার কম্প্রেসার প্রেশার ৮ বার..." required></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-outline" id="btnCancelNoteModal">বাতিল</button>
+            <button type="submit" class="btn-primary"><i class="fa-solid fa-floppy-disk"></i> নোট সংরক্ষণ করুন</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 
   <!-- MODAL: ADD NEW PROBLEM TICKET -->

@@ -937,3 +937,62 @@ button {
 .hidden {
   display: none !important;
 }
+
+/* MONTHLY AUDIT TABLE & CONTROLS */
+.monthly-filter-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.monthly-table-card {
+  padding: 0;
+  overflow: hidden;
+  margin-top: 14px;
+}
+
+.monthly-table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.audit-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.audit-table th {
+  background: #111e38;
+  color: #94a3b8;
+  padding: 12px 16px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.audit-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(43, 67, 116, 0.4);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.audit-table tr:hover {
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.audit-badge {
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.audit-pass { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+.audit-pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+.audit-fail { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+
