@@ -46,15 +46,29 @@ The app systematically covers the 8 core responsibilities outlined in the Job De
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## 💻 Enterprise Desktop Application (Windows)
 
-- **Platform**: Android Native (API 24 to 36)
-- **UI Framework**: Jetpack Compose with Material Design 3
-- **Language**: Kotlin 2.3+
-- **Architecture**: MVVM with Repository Pattern
-- **Scheduling**: Android `AlarmManager` (`RTC_WAKEUP`), `BroadcastReceiver`, `BootReceiver`
-- **Notifications**: `NotificationCompat`, Notification Channels (High Priority, Alarms, Sticky Ongoing)
-- **Local Persistence**: `SharedPreferences` with structured JSON serialization
+In addition to the Android APK, the project includes a high-performance **Desktop Application** built on **Electron.js** and **HTML5/CSS3 Enterprise Dashboard**:
+
+- **🚀 1-Click Desktop Launcher**: Just double-click `LaunchDesktopApp.bat` in the project root!
+- **🚨 Advanced Problem & Incident Tracking**:
+  - Log new breakdowns/issues on sight with Category, Location/Bay, and Severity (Critical, High, Medium, Low).
+  - Set **Target Resolution Deadlines (SLA)** with real-time countdown.
+  - Formulate detailed step-by-step **Work Instructions & SOP Guidance** for technicians.
+  - Tag personnel (Foreman, Electrician, Technician, AC Vendor, Security, Admin).
+  - Tag involved departments (Workshop, Admin, Stores, Accounts, Safety).
+  - Full lifecycle tracking: `OPEN` ➔ `IN_PROGRESS` ➔ `PENDING_SPARE` ➔ `RESOLVED` ➔ `CLOSED`.
+- **🔔 Windows Native Toast Notifications & System Tray**:
+  - Toast alerts with audio chimes for 09:00 AM Morning Inspection, 01:00 PM Midday, 05:15 PM Pre-closing, and SLA Overdues.
+  - Minimizes to Windows System Tray and keeps monitoring in background.
+
+---
+
+## 🛠️ Tech Stack & Multi-Platform Architecture
+
+- **Mobile (Android)**: Kotlin, Jetpack Compose, Material 3, Android Exact AlarmManager, BroadcastReceiver.
+- **Desktop (Windows)**: Electron.js, Node.js v24, HTML5/CSS3 Glassmorphic UI, Windows Native Notification API, System Tray.
+- **Data Persistence**: Offline-first local JSON & SharedPreferences storage with WhatsApp/SMS/PDF reporting.
 
 ---
 

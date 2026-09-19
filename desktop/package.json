@@ -1,0 +1,23 @@
+{
+  "name": "car-service-center-admin-desktop",
+  "version": "1.0.0",
+  "description": "Car Service Center Admin POC Desktop Application with Daily Routine SOPs, Problem & Incident Management, and Windows Toast Notifications",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "car-service",
+    "admin-poc",
+    "sop",
+    "incident-management",
+    "desktop-app",
+    "electron"
+  ],
+  "author": "Car Service Center Admin",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^32.1.0"
+  }
+}

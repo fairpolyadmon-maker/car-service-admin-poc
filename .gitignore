@@ -10,4 +10,4 @@ app/build/
 .externalNativeBuild
 .cxx
 local.properties
-
+desktop/node_modules/

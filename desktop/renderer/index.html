@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Service Center Admin POC - Executive Desktop Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="top-header">
+    <div class="header-left">
+      <div class="logo-icon">
+        <i class="fa-solid fa-car-tunnel"></i>
+      </div>
+      <div class="header-title-group">
+        <h1>Car Service Center Admin POC</h1>
+        <span class="center-tag" id="displayCenterName"><i class="fa-solid fa-location-dot"></i> মিরপুর কার সার্ভিস সেন্টার</span>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="clock-badge">
+        <i class="fa-regular fa-clock"></i>
+        <span id="liveTime">09:00:00 AM</span>
+      </div>
+      <div class="date-badge" id="liveDate">19 September, 2026</div>
+      <div class="duty-badge" id="dutyBadge">ডিউটি চলমান ⚡</div>
+    </div>
+
+    <div class="header-right">
+      <button class="btn-primary" id="btnOpenNewProblem">
+        <i class="fa-solid fa-triangle-exclamation"></i> + নতুন সমস্যা এন্ট্রি
+      </button>
+      <button class="btn-success" id="btnOpenDailyReport">
+        <i class="fa-solid fa-file-invoice"></i> ডেইলি রিপোর্ট
+      </button>
+      <button class="btn-danger" id="btnTriggerSos">
+        <i class="fa-solid fa-bell"></i> SOS অ্যালার্ট
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <nav class="nav-menu">
+        <button class="nav-item active" data-tab="routine">
+          <i class="fa-solid fa-list-check"></i>
+          <span>দৈনিক রুটিন চেকলিস্ট</span>
+          <span class="badge" id="sidebarPendingBadge">0</span>
+        </button>
+        <button class="nav-item" data-tab="incidents">
+          <i class="fa-solid fa-screwdriver-wrench"></i>
+          <span>সমস্যা ও ইনসিডেন্ট ট্র্যাকার</span>
+          <span class="badge badge-warning" id="sidebarOpenIssuesBadge">0</span>
+        </button>
+        <button class="nav-item" data-tab="dashboard">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>অপারেশনাল ওভারভিউ</span>
+        </button>
+        <button class="nav-item" data-tab="reports">
+          <i class="fa-solid fa-file-lines"></i>
+          <span>ম্যানেজমেন্ট রিপোর্টিং</span>
+        </button>
+        <button class="nav-item" data-tab="settings">
+          <i class="fa-solid fa-sliders"></i>
+          <span>কনফিগ ও অ্যালার্ম টেস্ট</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="officer-card">
+          <div class="officer-avatar"><i class="fa-solid fa-user-tie"></i></div>
+          <div class="officer-info">
+            <span class="officer-name" id="displayOfficerName">Admin POC Officer</span>
+            <span class="officer-role">Sr. Executive / Asst. Manager</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Content Area -->
+    <main class="main-content">
+
+      <!-- 1. ROUTINE TAB -->
+      <section id="tab-routine" class="tab-pane active">
+        <!-- Urgent Pre-Closing Banner (Visible 5:15 PM+ if tasks pending) -->
+        <div class="urgent-banner hidden" id="preClosingBanner">
+          <div class="urgent-banner-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+          <div class="urgent-banner-text">
+            <h3>⚠️ অফিস ছুটির পূর্বে তাগিদ (৫:১৫ PM+)</h3>
+            <p>সন্ধ্যা ৬:০০ টায় অফিস শেষ হওয়ার আগে আপনার দৈনন্দিন কাজ ও সমস্যাগুলো দ্রুত সমাধান করে ম্যানেজমেন্টের কাছে ডেইলি রিপোর্ট সাবমিট করুন!</p>
+          </div>
+        </div>
+
+        <!-- Routine Summary KPI Cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon icon-blue"><i class="fa-solid fa-calendar-day"></i></div>
+            <div class="kpi-data">
+              <span class="kpi-value" id="kpiTotalTasks">15</span>
+              <span class="kpi-label">মোট নির্ধারিত কাজ</span>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon icon-green"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="kpi-data">
+              <span class="kpi-value" id="kpiCompletedTasks">0</span>
+              <span class="kpi-label">সম্পন্ন হয়েছে</span>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon icon-red"><i class="fa-solid fa-clock-rotate-left"></i></div>
+            <div class="kpi-data">
+              <span class="kpi-value" id="kpiPendingTasks">15</span>
+              <span class="kpi-label">এখনও বাকি (পেন্ডিং)</span>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon icon-orange"><i class="fa-solid fa-percent"></i></div>
+            <div class="kpi-data">
+              <span class="kpi-value" id="kpiProgressPercent">0%</span>
+              <span class="kpi-label">দৈনিক অগ্রগতি হার</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slot Filter Tabs -->
+        <div class="slot-filter-bar">
+          <button class="slot-pill active" data-slot="ALL">সকল রুটিন টাস্ক (<span id="countSlotAll">0</span>)</button>
+          <button class="slot-pill" data-slot="MORNING">🌅 সকাল (০৯:০০ - ০৯:৪৫) (<span id="countSlotMorning">0</span>)</button>
+          <button class="slot-pill" data-slot="MIDDAY">☀️ দুপুর (০১:০০ - ০২:০০) (<span id="countSlotMidday">0</span>)</button>
+          <button class="slot-pill" data-slot="PRE_CLOSING">⚠️ প্রি-ক্লোজিং (০৫:১৫ - ০৫:৪৫) (<span id="countSlotPreClosing">0</span>)</button>
+          <button class="slot-pill" data-slot="EVENING">🌙 ক্লোজিং (০৫:৪৫ - ০৬:০০) (<span id="countSlotEvening">0</span>)</button>
+        </div>
+
+        <!-- Task Items List -->
+        <div class="tasks-container" id="tasksList">
+          <!-- Dynamically Rendered Tasks -->
+        </div>
+      </section>
+
+      <!-- 2. INCIDENT & PROBLEM TRACKER TAB -->
+      <section id="tab-incidents" class="tab-pane">
+        <div class="section-header">
+          <div>
+            <h2>🚨 সার্ভিস সেন্টার সমস্যা ও ব্রেকডাউন ট্র্যাকার</h2>
+            <p>ওয়ার্কশপ বা সুবিধায় চোখে পড়া যেকোনো ত্রুটি এন্ট্রি করুন, ডিপার্টমেন্ট ও কর্মী ট্যাগ করুন এবং ডেডলাইনের মধ্যে সমাধান নিশ্চিত করুন।</p>
+          </div>
+          <button class="btn-primary" id="btnNewProblemSecondary">
+            <i class="fa-solid fa-plus"></i> নতুন সমস্যা যোগ করুন
+          </button>
+        </div>
+
+        <!-- Incident KPI Filter Bar -->
+        <div class="incident-status-filters">
+          <button class="status-chip active" data-status="ALL">সকল সমস্যা (<span id="countIssueAll">0</span>)</button>
+          <button class="status-chip" data-status="OPEN">নতুন ওপেন (<span id="countIssueOpen">0</span>)</button>
+          <button class="status-chip" data-status="IN_PROGRESS">চলমান / ইন-প্রগ্রেস (<span id="countIssueProgress">0</span>)</button>
+          <button class="status-chip" data-status="PENDING_SPARE">স্পেয়ার/ভেন্ডর অপেক্ষমান (<span id="countIssueSpare">0</span>)</button>
+          <button class="status-chip" data-status="RESOLVED">সমাধানকৃত (<span id="countIssueResolved">0</span>)</button>
+        </div>
+
+        <!-- Incidents Grid -->
+        <div class="incidents-grid" id="incidentsList">
+          <!-- Dynamically populated incident cards -->
+        </div>
+      </section>
+
+      <!-- 3. DASHBOARD OVERVIEW TAB -->
+      <section id="tab-dashboard" class="tab-pane">
+        <div class="section-header">
+          <h2>📊 সার্ভিস সেন্টার অপারেশনাল ড্যাশবোর্ড ও অ্যানালিটিক্স</h2>
+          <p>সুবিধা ব্যবস্থাপনা ও কার্যক্ষমতার সামগ্রিক পরিসংখ্যান</p>
+        </div>
+
+        <div class="overview-grid">
+          <div class="card overview-card">
+            <h3>🏢 বিভাগভিত্তিক সম্পৃক্ততা ও সমস্যা</h3>
+            <div class="dept-stats-list" id="deptStatsList">
+              <!-- Rendered via app.js -->
+            </div>
+          </div>
+
+          <div class="card overview-card">
+            <h3>⏱️ SLA ও রেসপন্স পারফরমেন্স</h3>
+            <div class="sla-stat-box">
+              <div class="sla-metric">
+                <span class="sla-num" id="slaOnTimeCount">0</span>
+                <span class="sla-text">সময়মতো সমাধান</span>
+              </div>
+              <div class="sla-metric overdue">
+                <span class="sla-num" id="slaOverdueCount">0</span>
+                <span class="sla-text">ওভারডিউ / ডেডলাইন অতিক্রান্ত</span>
+              </div>
+            </div>
+            <div class="info-callout">
+              <i class="fa-solid fa-circle-info"></i>
+              <span>ডেডলাইন অতিক্রান্ত হলে উইন্ডোজ ডেস্কটপ স্ক্রিনে স্বয়ংক্রিয় লাল সতর্কতা ব্যানার ও সাউন্ড বাজবে।</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. REPORTS TAB -->
+      <section id="tab-reports" class="tab-pane">
+        <div class="section-header">
+          <h2>📑 ম্যানেজমেন্ট রিপোর্টিং হাব</h2>
+          <p>হেড অব অ্যাডমিনের নিকট প্রেরণের জন্য প্রস্তুতকৃত দৈনিক অপারেশনাল ও ইনসিডেন্ট রিপোর্ট</p>
+        </div>
+
+        <div class="report-box card">
+          <div class="report-toolbar">
+            <button class="btn-outline" id="btnCopyReport"><i class="fa-solid fa-copy"></i> কপি করুন</button>
+            <button class="btn-success" id="btnSendWhatsApp"><i class="fa-brands fa-whatsapp"></i> WhatsApp-এ পাঠান</button>
+            <button class="btn-outline" id="btnPrintReport"><i class="fa-solid fa-print"></i> প্রিন্ট / PDF সেভ</button>
+          </div>
+          <pre class="report-preview" id="reportPreviewText">লোড হচ্ছে...</pre>
+        </div>
+      </section>
+
+      <!-- 5. SETTINGS & TEST TAB -->
+      <section id="tab-settings" class="tab-pane">
+        <div class="section-header">
+          <h2>⚙️ সিস্টেম কনফিগারেশন ও নোটিফিকেশন অ্যালার্ম টেস্ট</h2>
+          <p>অফিসের সময়সূচী, যোগাযোগের নম্বর ও লাইভ অ্যালার্ম পরীক্ষা করুন</p>
+        </div>
+
+        <div class="settings-grid">
+          <div class="card settings-card">
+            <h3>👤 অ্যাডমিন প্রোফাইল ও সার্ভিস সেন্টার</h3>
+            <div class="form-group">
+              <label>অ্যাডমিন পিওসি নাম ও পদবী</label>
+              <input type="text" id="cfgOfficerName" class="form-control" value="Md. Harun-Or-Rashid (Sr. Executive - Admin)">
+            </div>
+            <div class="form-group">
+              <label>কার সার্ভিস সেন্টার লোকেশন</label>
+              <input type="text" id="cfgCenterName" class="form-control" value="Mirpur Central Car Service Center">
+            </div>
+            <div class="form-group">
+              <label>হেড অব অ্যাডমিন ফোন / SMS নম্বর</label>
+              <input type="text" id="cfgHeadPhone" class="form-control" value="+8801700000000">
+            </div>
+            <button class="btn-primary" id="btnSaveConfig"><i class="fa-solid fa-floppy-disk"></i> সেটিংস সংরক্ষণ করুন</button>
+          </div>
+
+          <div class="card settings-card">
+            <h3>🔔 তাত্ক্ষণিক ডেস্কটপ নোটিফিকেশন ও অ্যালার্ম টেস্ট</h3>
+            <p>আপনার কম্পিউটারে উইন্ডোজ নোটিফিকেশন ও সাউন্ড সঠিকভাবে কাজ করছে কি না এখনই পরীক্ষা করুন:</p>
+            
+            <div class="test-buttons-list">
+              <button class="btn-outline" id="testMorningAlert">
+                <i class="fa-solid fa-sun"></i> 🌅 সকাল ৯:০০ ওপেনিং অ্যালার্ম টেস্ট
+              </button>
+              <button class="btn-outline" id="testMiddayAlert">
+                <i class="fa-solid fa-wrench"></i> ☀️ দুপুর ১:০০ ওয়ার্কশপ ইনস্পেকশন টেস্ট
+              </button>
+              <button class="btn-outline btn-warning-outline" id="testPreClosingAlert">
+                <i class="fa-solid fa-triangle-exclamation"></i> ⚠️ ৫:১৫ PM প্রি-ক্লোজিং কড়া তাগিদ টেস্ট
+              </button>
+              <button class="btn-outline btn-danger-outline" id="testSlaAlert">
+                <i class="fa-solid fa-circle-exclamation"></i> 🚨 প্রবলেম SLA ওভারডিউ অ্যালার্ট টেস্ট
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MODAL: ADD NEW PROBLEM TICKET -->
+  <div class="modal-overlay hidden" id="newProblemModal">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-triangle-exclamation"></i> চোখে পড়া নতুন সমস্যা এন্ট্রি করুন</h3>
+        <button class="btn-close" id="btnCloseProblemModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="problemForm">
+          <div class="form-row">
+            <div class="form-group col-8">
+              <label>সমস্যার বিবরণ / শিরোনাম *</label>
+              <input type="text" id="probTitle" class="form-control" placeholder="যেমন: বে ৩ হাইড্রোলিক লিফট প্রেসার ড্রপ ও তেল লিকেজ" required>
+            </div>
+            <div class="form-group col-4">
+              <label>ক্যাটাগরি *</label>
+              <select id="probCategory" class="form-control" required>
+                <option value="Hydraulic Lift & Ramps">হাইড্রোলিক লিফট ও র‍্যাম্প</option>
+                <option value="Air Compressor & Pneumatic">এয়ার কম্প্রেসার ও পাইপলাইন</option>
+                <option value="Electrical & Power">ইলেকট্রিক্যাল ও মেইন পাওয়ার</option>
+                <option value="Plumbing & Drainage">প্লাম্বিং ও ড্রেনেজ সিস্টেম</option>
+                <option value="HVAC & AC System">এসি ও ওয়ার্কশপ ভেন্টিলেশন</option>
+                <option value="Fire Safety & Exits">ফায়ার সেফটি ও ইমার্জেন্সি এক্সিট</option>
+                <option value="CCTV & Security">সিসিটিভি ও নিরাপত্তা সরঞ্জাম</option>
+                <option value="Customer Lounge & Pantry">কাস্টমার লাউঞ্জ ও প্যান্ট্রি</option>
+                <option value="Housekeeping & Bay Hygiene">সার্ভিস বে পরিচ্ছন্নতা ও তেল বর্জ্য</option>
+                <option value="Workshop Tools & Machinery">ওয়ার্কশপ স্পেশাল টুলস ও মেশিনারি</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-4">
+              <label>লোকেশন / সার্ভিস বে *</label>
+              <input type="text" id="probLocation" class="form-control" placeholder="যেমন: সার্ভিস বে নং ৩" required>
+            </div>
+            <div class="form-group col-4">
+              <label>তীব্রতা (Severity Matrix) *</label>
+              <select id="probSeverity" class="form-control" required>
+                <option value="CRITICAL">🔴 CRITICAL (সার্ভিস বন্ধের ঝুঁকি)</option>
+                <option value="HIGH" selected>🟠 HIGH (জরুরি মেরামত প্রয়োজন)</option>
+                <option value="MEDIUM">🟡 MEDIUM (মাঝারি গুরুত্ব)</option>
+                <option value="LOW">🟢 LOW (সাধারণ পর্যবেক্ষণ)</option>
+              </select>
+            </div>
+            <div class="form-group col-4">
+              <label>সমাধানের সময়সীমা (Target SLA Deadline) *</label>
+              <input type="datetime-local" id="probDeadline" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>কাজের সুনির্দিষ্ট নির্দেশনা (Step-by-step Work Instructions & Guidance) *</label>
+            <textarea id="probInstructions" class="form-control" rows="3" placeholder="১. প্রথমে মেইন সেফটি ভালভ অফ করুন।&#10;২. হাইড্রোলিক হোসপাইপ বা সিল পরিবর্তন করুন।&#10;৩. মেরামত শেষে টেস্ট লোড দিয়ে প্রেসার পর্যবেক্ষণ করুন।" required></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label>কাকে কাকে ট্যাগ করা হবে (Tagged Assignees / Personnel)</label>
+              <div class="tag-selector" id="assigneeSelector">
+                <label class="tag-check"><input type="checkbox" value="ওয়ার্কশপ ফোরম্যান" checked> <span>ফোরম্যান</span></label>
+                <label class="tag-check"><input type="checkbox" value="ইন-হাউজ ইলেকট্রিশিয়ান"> <span>ইলেকট্রিশিয়ান</span></label>
+                <label class="tag-check"><input type="checkbox" value="হাইড্রোলিক টেকনিশিয়ান"> <span>টেকনিশিয়ান</span></label>
+                <label class="tag-check"><input type="checkbox" value="এক্সটার্নাল এসি ভেন্ডর"> <span>এসি ভেন্ডর</span></label>
+                <label class="tag-check"><input type="checkbox" value="সিকিউরিটি ইনচার্জ"> <span>সিকিউরিটি</span></label>
+                <label class="tag-check"><input type="checkbox" value="হেড অব অ্যাডমিন"> <span>হেড অব অ্যাডমিন</span></label>
+              </div>
+            </div>
+
+            <div class="form-group col-6">
+              <label>সম্পৃক্ত ডিপার্টমেন্ট (Involved Departments)</label>
+              <div class="tag-selector" id="deptSelector">
+                <label class="tag-check"><input type="checkbox" value="Workshop Operations" checked> <span>🏭 Workshop</span></label>
+                <label class="tag-check"><input type="checkbox" value="Administration" checked> <span>🏢 Admin</span></label>
+                <label class="tag-check"><input type="checkbox" value="Stores & Procurement"> <span>📦 Stores/Parts</span></label>
+                <label class="tag-check"><input type="checkbox" value="Accounts & Finance"> <span>💰 Accounts</span></label>
+                <label class="tag-check"><input type="checkbox" value="Safety & Security"> <span>🛡️ Safety</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-outline" id="btnCancelProblem">বাতিল</button>
+            <button type="submit" class="btn-primary"><i class="fa-solid fa-check"></i> সমস্যাটি সেভ করুন ও অ্যালার্ট দিন</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: UPDATE PROBLEM STATUS -->
+  <div class="modal-overlay hidden" id="updateProblemModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-pen-to-square"></i> সমস্যার স্ট্যাটাস আপডেট ও সমাধান</h3>
+        <button class="btn-close" id="btnCloseUpdateModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="updateStatusForm">
+          <input type="hidden" id="updateTicketId">
+          <div class="ticket-meta-box" id="updateTicketSummary"></div>
+
+          <div class="form-group">
+            <label>বর্তমান স্ট্যাটাস পরিবর্তন করুন *</label>
+            <select id="updateStatusSelect" class="form-control">
+              <option value="OPEN">OPEN (নতুন সমস্যা)</option>
+              <option value="IN_PROGRESS">IN PROGRESS (মেরামত কাজ চলছে)</option>
+              <option value="PENDING_SPARE">PENDING SPARE/VENDOR (স্পেয়ার বা ভেন্ডরের অপেক্ষায়)</option>
+              <option value="RESOLVED">RESOLVED (কাজ সম্পন্ন, ভেরিফিকেশন বাকি)</option>
+              <option value="CLOSED">CLOSED (অ্যাডমিন পিওসি কর্তৃক স্বচক্ষে যাচাই ও সমাপ্ত)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>কাজের অগ্রগতি বা সমাধানের নোট (Resolution / Work Notes)</label>
+            <textarea id="updateNotes" class="form-control" rows="3" placeholder="কী পদক্ষেপ নেওয়া হয়েছে বা কোন পার্টস পরিবর্তন করা হয়েছে তা লিখুন..."></textarea>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-outline" id="btnCancelUpdate">বাতিল</button>
+            <button type="submit" class="btn-primary">আপডেট সংরক্ষণ করুন</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
