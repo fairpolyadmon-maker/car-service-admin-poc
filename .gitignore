@@ -5,7 +5,7 @@
 .DS_Store
 /build
 app/build/
-*.apk
+!CarServiceAdminPOC.apk
 /captures
 .externalNativeBuild
 .cxx
